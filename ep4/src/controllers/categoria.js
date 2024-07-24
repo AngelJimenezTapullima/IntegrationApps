@@ -7,7 +7,9 @@ const getCategorias = async (req, res)=>{
         console.log(result);
         res.status(200).send(result);
     } catch (error) {
-        res.status(500).send(error.message)
+        //res.status(500).send(error.message)
+        console.error("Error en getCategorias:", error);
+        res.status(500).send("Error al obtener las categorías");
     }
 };
 
@@ -19,9 +21,7 @@ const updateCategoria = async (req, res)=>{
         }
 
         const connection = await getConnection();
-        const result = await connection.query(`UPDATE categorias SET
-                                                        descripcion = '${descripcion}'
-                                                WHERE id = ${id}`);
+        const result = await connection.query(`UPDATE categorias SET descripcion = '${descripcion}' WHERE id = ${id}`);
 
         res.status(200).send("Categoria actualizada correctamente")
         //res.send(result);
